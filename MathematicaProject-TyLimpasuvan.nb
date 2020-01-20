@@ -1,0 +1,330 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     12680,        322]
+NotebookOptionsPosition[     11964,        291]
+NotebookOutlinePosition[     12343,        307]
+CellTagsIndexPosition[     12300,        304]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Mathematica Project (1) - Ty Limpasuvan", "Title",
+ CellChangeTimes->{{3.7056293944701467`*^9, 3.7056294037584867`*^9}, {
+   3.7056296083624344`*^9, 3.7056296088518686`*^9}, 3.705629991108472*^9, {
+   3.7056301565811577`*^9, 3.7056301569948635`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["(1)", "Chapter",
+ CellChangeTimes->{{3.705635785188531*^9, 3.705635788052807*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "I", " ", "will", " ", "be", " ", "using", " ", "the", " ", "Erdos"}], 
+    "-", 
+    RowBox[{
+    "Renyi", " ", "method", " ", "for", " ", "generating", " ", "graphs"}]}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "This", " ", "function", " ", "receives", " ", "arguments", " ", "n", " ", 
+    RowBox[{"(", "dimensions", ")"}], " ", "and", " ", "p", " ", 
+    RowBox[{"(", 
+     RowBox[{
+     "probability", " ", "of", " ", "adding", " ", "an", " ", "edge", " ", 
+      "to", " ", "graph"}], ")"}], " ", "and", " ", "returns", " ", "the", 
+    " ", "adjacency", " ", "matrix", " ", "of", " ", "a", " ", "generated", 
+    " ", "graph"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"GetAdjacency", "[", 
+    RowBox[{"n_", ",", " ", "p_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"Module", " ", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"mat", " ", "=", " ", 
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"0", ",", 
+          RowBox[{"{", 
+           RowBox[{"n", ",", " ", "n"}], "}"}]}], "]"}]}], ",", " ", 
+       RowBox[{"ran", " ", "=", " ", 
+        RowBox[{"RandomGraph", "[", 
+         RowBox[{"BernoulliGraphDistribution", "[", 
+          RowBox[{"n", ",", " ", "p"}], "]"}], "]"}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"mat", " ", "=", " ", 
+       RowBox[{"AdjacencyMatrix", "[", "ran", "]"}]}], ";", 
+      "\[IndentingNewLine]", "mat"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.705629411482891*^9, 3.7056294121987886`*^9}, {
+   3.705629995415011*^9, 3.7056300093547153`*^9}, 3.7056301550866365`*^9, {
+   3.7056303305751286`*^9, 3.7056303587437043`*^9}, {3.705630780836441*^9, 
+   3.7056308354448843`*^9}, 3.705630927136772*^9, {3.705631208615446*^9, 
+   3.7056312449453015`*^9}, {3.705631353119814*^9, 3.7056313877861166`*^9}, {
+   3.7056314852688828`*^9, 3.705631489818121*^9}, {3.7056317033076935`*^9, 
+   3.705631709649667*^9}, {3.7056317402949133`*^9, 3.7056317463180923`*^9}, {
+   3.705631832019061*^9, 3.7056318396650743`*^9}, {3.7056318763997335`*^9, 
+   3.705631896522087*^9}, {3.7056322889642444`*^9, 3.7056323029408793`*^9}, {
+   3.7056337116358476`*^9, 3.705633782474955*^9}, {3.705633912020131*^9, 
+   3.705633919569991*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["(2)", "Chapter",
+ CellChangeTimes->{{3.705635796518602*^9, 3.7056357976877975`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Estimates", " ", "the", " ", "probability", " ", "of", " ", "generating",
+      " ", "connected", " ", 
+     RowBox[{"graphs", ".", "  ", "Accepts"}], " ", "the", " ", "arguments", 
+     " ", "n", " ", 
+     RowBox[{"(", 
+      RowBox[{"dimensions", " ", "of", " ", "adjacency", " ", "matrix"}], 
+      ")"}]}], ",", " ", 
+    RowBox[{"p", " ", 
+     RowBox[{"(", 
+      RowBox[{
+      "probability", " ", "of", " ", "adding", " ", "an", " ", "edge", " ", 
+       "to", " ", "a", " ", "graph"}], ")"}], " ", "and", " ", "m", " ", 
+     RowBox[{"(", 
+      RowBox[{
+      "number", " ", "of", " ", "graphs", " ", "to", " ", "be", " ", 
+       "generated"}], ")"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"GetConnectionProbability", "[", 
+    RowBox[{"n_", ",", " ", "p_", ",", " ", "m_"}], "]"}], " ", ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"count", " ", "=", " ", "0"}], ",", " ", 
+       RowBox[{"total", " ", "=", " ", "0"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Generate", " ", "m", " ", "random", " ", "graphs"}], " ", 
+      "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{"total", " ", "<", " ", "m"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"temp", " ", "=", " ", 
+          RowBox[{"AdjacencyGraph", "[", 
+           RowBox[{"GetAdjacency", "[", 
+            RowBox[{"n", ",", "p"}], "]"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Increase", " ", "the", " ", "count", " ", "of", " ", "the", " ", 
+           "connected", " ", "graphs", " ", "if", " ", "the", " ", 
+           "generated", " ", "graph", " ", "is", " ", "connected"}], " ", 
+          "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"ConnectedGraphQ", "[", "temp", "]"}], ",", 
+           RowBox[{"count", "+=", " ", "1"}]}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Increment", " ", "the", " ", "total", " ", "regardless", " ", "of",
+            " ", "whether", " ", "the", " ", "graph", " ", "is", " ", 
+           "connected"}], " ", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"total", " ", "+=", " ", "1"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Find", " ", "the", " ", "fraction", " ", "of", " ", "the", " ", 
+        "generated", " ", "graphs", " ", "that", " ", "were", " ", 
+        "connected", " ", "and", " ", "return", " ", "it"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"count", " ", "/", " ", "total"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.705631238396442*^9, 3.705631280529145*^9}, {
+  3.7056313265864487`*^9, 3.705631350105508*^9}, {3.7056319033563213`*^9, 
+  3.7056319126293974`*^9}, {3.705632376785734*^9, 3.7056323955644116`*^9}, {
+  3.7056327650299897`*^9, 3.7056327710983653`*^9}, {3.705632863111803*^9, 
+  3.7056329094734297`*^9}, {3.7056330380007095`*^9, 3.7056331921988935`*^9}, {
+  3.705633269004676*^9, 3.705633276282453*^9}, {3.7056333643547683`*^9, 
+  3.7056334092575607`*^9}, {3.705633461953991*^9, 3.7056335145778284`*^9}, {
+  3.7056335836818504`*^9, 3.705633588921501*^9}, {3.7056336307832727`*^9, 
+  3.7056336873690414`*^9}, {3.705633785623819*^9, 3.7056337900686965`*^9}, {
+  3.705633837273963*^9, 3.7056338535750556`*^9}, {3.705633888849978*^9, 
+  3.7056340342629995`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["(3)", "Chapter",
+ CellChangeTimes->{{3.705635806542596*^9, 3.7056358076468086`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "For", " ", "showing", " ", "the", " ", "critical", " ", "value", " ", 
+     "of", " ", "p"}], ",", " ", 
+    RowBox[{
+    "I", " ", "generate", " ", "100", " ", "graphs", " ", "and", " ", "have", 
+     " ", "an", " ", "n", " ", "x", " ", "n", " ", "adjacency", " ", "matrix",
+      " ", "for", " ", "each", " ", 
+     RowBox[{"calculation", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"mtest", " ", "=", " ", "100"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ntest", "=", "10"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rangeP", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"i", ",", " ", 
+         RowBox[{"GetConnectionProbability", "[", 
+          RowBox[{"ntest", ",", " ", 
+           RowBox[{"i", " ", "/", " ", "100"}], ",", " ", "mtest"}], "]"}]}], 
+        "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", " ", "1", ",", " ", "100"}], "}"}]}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "After", " ", "calling", " ", "my", " ", "function", " ", "on", " ", 
+      "the", " ", "the", " ", "range", " ", "of", " ", "values", " ", "from", 
+      " ", "0", " ", "to", " ", "1", " ", "for", " ", "the", " ", 
+      "probability", " ", "of", " ", "adding", " ", "an", " ", "edge", " ", 
+      "to", " ", "a", " ", "graph"}], ",", " ", 
+     RowBox[{"I", " ", "plot", " ", "my", " ", "results"}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"rangeP", ",", " ", 
+     RowBox[{
+     "PlotLabel", "\[Rule]", 
+      "\"\<Probability of creating connected graph \\nvs % probability of \
+adding edge to graph\>\""}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.705634434711402*^9, 3.7056345207168255`*^9}, {
+   3.705634584871895*^9, 3.7056345858738203`*^9}, {3.705634697579415*^9, 
+   3.7056347115297556`*^9}, {3.7056348241075487`*^9, 
+   3.7056348672449245`*^9}, {3.7056349680562134`*^9, 
+   3.7056349861351323`*^9}, {3.705635036981516*^9, 3.705635086475836*^9}, {
+   3.7056351270293455`*^9, 3.705635127476506*^9}, {3.705635167987645*^9, 
+   3.7056352029038725`*^9}, {3.7056352429937067`*^9, 3.70563524509846*^9}, {
+   3.705635295088908*^9, 3.705635313825553*^9}, {3.705635501890654*^9, 
+   3.705635501956196*^9}, 3.7056355884099927`*^9, {3.7056356254085116`*^9, 
+   3.7056357218898273`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, 
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.009166666666666668], 
+     AbsoluteThickness[1.6], PointBox[CompressedData["
+1:eJxd0zssg1EYBuAvJulk6GAQt4iUiKDuVD9F636pe2ISrGplOQOzxcJgYbF0
+1fEEI5NEExFJ4xJxX5j1//tW8r8naZqn73nP+f42rVhej68WiMhK9uW859Z3
+WLxLvSwkF5H95GJyCbmcXEmuIlfrlj8Zy2xuY84AvAfXaqp0520qdQjX6cG+
+s07gevWljxIh3yncgP1JuFGPs2n6yMJNOP8CDmrQXedws2442xNXcIvWLO2e
+/QQu4VZ1r0tfw2265q4buB3zpOEOdY8L3cKdOO8O7sLzZOBuzH8PhyjvQf8R
+DmPeJ1gx30PORtV9XP8z8l79DTgHvCDvxXyvyCNa5lxf+oE8gu/nDXkf5X2Y
+5x15P+7HftPv3S8DmDffJ0uUzo9i/k/kMXy/X8hj6sZJWAYpH8Tvk+8PqTvu
+Uj4f0tzn+f/JMOXDlI94bUa898modx5DljHqk2WccrJMUE6WSa+VbCa9z2cp
+lynqkw3ZkiVOfbIhW7JMU59syJYsM9QnG7Ilyyz1yYZsyTJHfbIhW7LMU59s
+yJYsC9QnG7Ily+K//wAr2y9v
+      "]]}, {}}, {}, {}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& )}},
+  PlotLabel->FormBox[
+   "\"Probability of creating connected graph \\nvs % probability of adding \
+edge to graph\"", TraditionalForm],
+  PlotRange->{{0, 100.}, {0, 1.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.7056356095684924`*^9, 3.705635746724563*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 697},
+WindowMargins->{{Automatic, 17}, {-158, Automatic}},
+Magnification:>0.9 Inherited,
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 256, 3, 130, "Title"],
+Cell[CellGroupData[{
+Cell[861, 29, 88, 1, 57, "Chapter"],
+Cell[952, 32, 2363, 51, 172, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3352, 88, 90, 1, 57, "Chapter"],
+Cell[3445, 91, 3728, 81, 298, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7210, 177, 90, 1, 57, "Chapter"],
+Cell[CellGroupData[{
+Cell[7325, 182, 2499, 55, 190, "Input"],
+Cell[9827, 239, 2097, 47, 251, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
